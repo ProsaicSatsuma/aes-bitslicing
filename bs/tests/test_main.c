@@ -26,30 +26,19 @@ static const uint8_t sbox[256] = {
 int main() {
 
         /* Pack up the first few entries */
-	uint64_t inputs[8];
+	uint64_t sliced_inputs[8];
 	uint8_t rawBytes[64];
+	memset(rawBytes, 0x00, 64);
         for(int i = 0; i < 64; i++) rawBytes[i] = i;
 
-	pack(inputs, rawBytes);
+	pack_64_bytes_to_8_x_uint64_t(&sliced_inputs[0], rawBytes);
 
-/*	uint64_t outputs[8];
-	memset(outputs, 0x00, 64);
-
-        sbox_forward(inputs, outputs);
-*/
 	uint8_t rawOutputs[64];
 	memset(rawOutputs, 0x00, 64);
 
-//	unpack(rawOutputs, outputs);
-        unpack(rawOutputs, inputs);
-/*
-	for(uint8_t i = 0; i < 64; i++) {
-		printf("%02x\n", rawOutputs[i]);
-		assert(rawOutputs[i] == sbox[i]);
-	}
-	*/
+        unpack_8_x_uint64_t_to_64_bytes(&rawOutputs[0], sliced_inputs);
 
-	for(uint8_t i = 0; i < 64; i++) {
+	for(int i = 0; i < 64; i++) {
 		assert(rawOutputs[i] == rawBytes[i]);
 	}
 
