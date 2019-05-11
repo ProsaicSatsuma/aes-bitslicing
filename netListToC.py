@@ -16,6 +16,10 @@ def handleContents(contents):
     print "#include <stdio.h>"
     print "int main() {"
 
+    print "uint8_t outforcer;"
+    print "volatile uint8_t * out = &outforcer;"
+    print "for(uint32_t rep = 0; rep < 200000000; rep++) {"
+
     print "uint8_t i_0 = 0xFF;"
     print "uint8_t i_1 = 0x00;"
     print "uint8_t i_2 = 0x00;"
@@ -72,7 +76,9 @@ def handleContents(contents):
     print "if(o_7) o_7 = 1;"
 
     print "const uint8_t output = (o_7 << 7) | (o_6 << 6) | (o_5 << 5) | (o_4 << 4) | (o_3 << 3) | (o_2 << 2) | (o_1 << 1) | (o_0 << 0);"
-    print "fprintf(stdout, \"output: %02x\\n\", output);"
+#    print "fprintf(stdout, \"output: %02x\\n\", output);"
+    print "*out = output;"
+    print "}"
     
     print "}"
 
