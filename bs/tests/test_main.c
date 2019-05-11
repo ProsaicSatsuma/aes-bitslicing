@@ -35,11 +35,14 @@ int main() {
 
 	uint8_t rawOutputs[64];
 	memset(rawOutputs, 0x00, 64);
+	uint64_t sliced_outputs[8];
 
-        unpack_8_x_uint64_t_to_64_bytes(&rawOutputs[0], sliced_inputs);
+        sbox_forward(sliced_inputs, sliced_outputs);
+
+        unpack_8_x_uint64_t_to_64_bytes(&rawOutputs[0], sliced_outputs);
 
 	for(int i = 0; i < 64; i++) {
-		assert(rawOutputs[i] == rawBytes[i]);
+		assert(rawOutputs[i] == sbox[i]);
 	}
 
 }
